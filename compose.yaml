@@ -3,8 +3,8 @@ services:
     image: postgres:15-alpine
     container_name: fitness-db
     environment:
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: password123
+      POSTGRES_USER: ${USER_DB}
+      POSTGRES_PASSWORD: ${PASSWORD_DB}
       POSTGRES_DB: suplementos_store
     ports:
       - "5433:5432"

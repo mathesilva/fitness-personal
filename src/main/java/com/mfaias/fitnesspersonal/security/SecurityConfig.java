@@ -17,8 +17,14 @@ public class SecurityConfig {
         return http.csrf(csrf-> csrf.disable())
                 .cors(cors -> cors.configure(http))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(authorize -> authorize.
-                        requestMatchers(HttpMethod.POST, "/api/produtos/**").permitAll().anyRequest().authenticated()).build();
+                .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers("/error").permitAll().
+                        requestMatchers(HttpMethod.DELETE, "/api/produtos/**").permitAll().
+                        requestMatchers(HttpMethod.GET, "/api/produtos/busca").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/produtos/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/produtos/**").permitAll()
+                        .requestMatchers(HttpMethod.PUT, "/api/produtos/**").permitAll()
+                        .anyRequest().authenticated()).build();
     }
 
 
