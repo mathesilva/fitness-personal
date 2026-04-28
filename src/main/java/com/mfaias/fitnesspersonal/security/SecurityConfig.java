@@ -24,6 +24,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/produtos/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/produtos/**").permitAll()
                         .requestMatchers(HttpMethod.PUT, "/api/produtos/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/pedidos/**").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/api/pedidos/**").permitAll()
                         .anyRequest().authenticated()).build();
     }
 

@@ -14,4 +14,6 @@ public interface ProductRepository extends JpaRepository<Product, UUID>{
     List<Product> findByNomeContainingIgnoreCase (String nome);
 
     Optional<Product> findByNome(@NotBlank(message = "O nome do produto é obrigatório") String nome);
+
+    Optional<Product> findById(UUID uuid);
 }

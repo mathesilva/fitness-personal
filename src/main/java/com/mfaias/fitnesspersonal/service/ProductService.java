@@ -3,6 +3,8 @@ package com.mfaias.fitnesspersonal.service;
 import com.mfaias.fitnesspersonal.dto.request.ProductRequestDTO;
 import com.mfaias.fitnesspersonal.dto.response.ProductResponseDTO;
 import com.mfaias.fitnesspersonal.entity.Product;
+import com.mfaias.fitnesspersonal.exceptions.ProdutoJaCadastrado;
+import com.mfaias.fitnesspersonal.exceptions.ProdutoNaoEncontrado;
 import com.mfaias.fitnesspersonal.repository.ProductRepository;
 import jakarta.validation.constraints.NotBlank;
 import org.springframework.http.HttpStatus;
@@ -28,7 +30,7 @@ public class ProductService {
         Optional<Product> optProduct = productRepository.findByNome(request.nome());
 
         if (optProduct.isPresent()) {
-            throw new RuntimeException("Produto já existe");
+            throw new ProdutoJaCadastrado("Produto já existe");
         }
 
         Product product = new Product();
@@ -60,7 +62,7 @@ public class ProductService {
 
 
     public ProductResponseDTO attProduct(UUID uuid, ProductRequestDTO request){
-        Product product = productRepository.findById(uuid).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Produto nao encontrado"));
+        Product product = productRepository.findById(uuid).orElseThrow(() -> new ProdutoNaoEncontrado("Produto nao encontrado"));
         product.setNome(request.nome());
         product.setValor(request.valor());
         product.setQuantidadeEstoque(request.quantidadeEstoque());
@@ -72,7 +74,7 @@ public class ProductService {
 
     public void deletar(UUID id){
         if (!productRepository.existsById(id)){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Produto não encontrado");
+            throw new ProdutoNaoEncontrado("Produto não encontrado");
         }
             productRepository.deleteById(id);
     }
